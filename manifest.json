@@ -1,7 +1,7 @@
 {
   "name": "108 Counter",
   "short_name": "Counter",
-  "start_url": "counter.html",
+  "start_url": "index.html",
   "display": "standalone",
   "background_color": "#111111",
   "theme_color": "#111111",
