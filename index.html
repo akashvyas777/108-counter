@@ -4,10 +4,8 @@
   <meta charset="UTF-8">
   <title>108 Counter</title>
 
-  <!-- Mobile friendly -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- PWA support -->
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#111111">
 
@@ -22,6 +20,7 @@
       color: #fff;
       font-family: Arial, sans-serif;
       text-align: center;
+      user-select: none;
     }
 
     #counter {
@@ -40,7 +39,7 @@
 
 <div>
   <div id="counter">0</div>
-  <div id="info">Tap screen or press SPACE</div>
+  <div id="info">Tap or press SPACE</div>
 </div>
 
 <script>
@@ -93,6 +92,11 @@
     count++;
     counterEl.textContent = count;
 
+    // vibration (mobile)
+    if (navigator.vibrate) {
+      navigator.vibrate(15);
+    }
+
     if (count === maxCount) {
       playBell();
       setTimeout(() => {
@@ -102,22 +106,17 @@
     }
   }
 
-  // Spacebar (no hold repeat)
+  // ✅ ONE unified input (fixes double count)
+  document.addEventListener("pointerdown", function() {
+    incrementCounter();
+  });
+
+  // keyboard (no hold spam)
   document.addEventListener("keydown", function(event) {
     if (event.code === "Space" && !event.repeat) {
       event.preventDefault();
       incrementCounter();
     }
-  });
-
-  // Tap for mobile
-  document.addEventListener("touchstart", function() {
-    incrementCounter();
-  });
-
-  // Click for desktop
-  document.addEventListener("click", function() {
-    incrementCounter();
   });
 </script>
 
